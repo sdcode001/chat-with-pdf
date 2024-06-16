@@ -1,0 +1,4 @@
+1. ensure Redis server is running on localhost:6379
+2. start BullMQ worker
+3. start server
+4. start react client
