@@ -4,11 +4,14 @@ const {pdfQueue} = require('../bullMQ_service/bullmq_worker')
 async function ProjectCreateHandler(req, res){
     console.log(req.body)
 
+    const user_id = 1001;
+
     const job = await pdfQueue.add(
         `processPdf-${req.body.projectName}`, 
         {projectName: req.body.projectName, 
          description: req.body.description,
-         pdfUrl: req.body.pdfUrl
+         pdfUrl: req.body.pdfUrl,
+         userId: user_id 
         }
     )
 

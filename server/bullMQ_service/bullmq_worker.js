@@ -1,6 +1,8 @@
 const { Queue, QueueScheduler, Worker, Job } = require('bullmq');
 const {extractTextFromPDF} = require('../bullMQ_service/text_extractor')
 const {generateEmbedding} = require('../bullMQ_service/generate_embedding')
+const {saveProject} = require('../dao/ProjectDao')
+
 
 
 //Create a BullMQ queue
@@ -25,7 +27,7 @@ new QueueScheduler('pdfQueue', {
 
 // Create a worker to process jobs
 const worker = new Worker('pdfQueue', async job => {
-    const {projectName, description, pdfUrl} = job.data;
+    const {projectName, description, pdfUrl, userId} = job.data;
     try {
       console.log("Job started: ", job.id)  
 
@@ -33,9 +35,9 @@ const worker = new Worker('pdfQueue', async job => {
 
       const embedding = await generateEmbedding(text);
   
-      // Here, you can save the embedding to a database or file
-      
-      
+      //first save project in db for userId
+      //then save pdf_emb in db using this project_id
+      await saveProject(projectName, description, pdfUrl, userId, embedding); 
 
     } catch (err) {
       console.log(err)
