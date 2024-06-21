@@ -9,7 +9,7 @@ async function saveProject(projectName, description, pdfUrl, userId, embedding){
           })
           .catch(err=>{
               throw err;
-          })
+          }) 
       }catch(err){
         throw err;
       }

@@ -2,7 +2,6 @@ const use = require('@tensorflow-models/universal-sentence-encoder');
 const tf = require('@tensorflow/tfjs');
 
 
-
 async function generateEmbedding(text){
     // Set the backend to 'cpu'
     await tf.setBackend('cpu');
